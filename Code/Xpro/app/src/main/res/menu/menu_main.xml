@@ -1,6 +1,36 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/itemTeach"
+            android:icon="@drawable/menu_teach_nor"
+            android:title="教学" />
+        <item
+            android:id="@+id/itemMessage"
+            android:icon="@drawable/menu_message_nor"
+            android:title="消息" />
+        <item
+            android:id="@+id/itemFind"
+            android:icon="@drawable/menu_find_nor"
+            android:title="发现" />
+        <item
+            android:id="@+id/itemMine"
+            android:icon="@drawable/menu_mine_nor"
+            android:title="我的" />
+    </group>
+
+    <item android:title="setting">
+        <menu>
+            <item
+                android:icon="@drawable/menu_setting"
+                android:title="设置" />
+            <item
+                android:icon="@drawable/menu_feedback"
+                android:title="意见反馈" />
+        </menu>
+
+    </item>
+
 </menu>

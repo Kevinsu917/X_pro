@@ -1,19 +1,31 @@
 package io.github.kevinsu917.xpro;
 
+import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.TextView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_main)
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
+
+    FloatingActionButton btn;
+    ShareActionProvider shareActionProvider;
+
+    @ViewById(R.id.tvName)
+    TextView tvName;
+
+    @ViewById(R.id.tvMood)
+    TextView tvMood;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,40 +33,102 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @AfterViews
-    void initView(){
+    void initView() {
+
+        Typeface typeFaceName =Typeface.createFromAsset(getAssets(),"fonts/Roboto-Medium.ttf");
+        tvName.setTypeface(typeFaceName);
+        Typeface typeFaceMood =Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
+        tvMood.setTypeface(typeFaceMood);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        final ActionBar actionBar = getSupportActionBar();
+
+//        actionBar.setDisplayShowHomeEnabled(true);
+//        actionBar.setDisplayShowTitleEnabled(true);
+//        actionBar.setDisplayHomeAsUpEnabled(true);
+//        actionBar.setHomeButtonEnabled(true);
+//        actionBar.setDisplayUseLogoEnabled(true);
+//        actionBar.setDefaultDisplayHomeAsUpEnabled(true);
+
+//        actionBar.setTitle("你好");
+        actionBar.setShowHideAnimationEnabled(true);
+
+        btn = (FloatingActionButton) findViewById(R.id.fab);
+        btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+//                if (actionBar.isShowing()) {
+//                    actionBar.hide();
+//                    showSnackbar(view);
+//                } else {
+//                    showSnackbar(view);
+//                    actionBar.show();
+//                }
+
+//                HttpReqManager.getInstance(MainActivity.this).requet();
+
+                Intent intent = new Intent(MainActivity.this, ChildActivity_.class);
+                startActivity(intent);
             }
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//
+//        MenuItem aboutItem = menu.findItem(R.id.action_about);
+//        shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(aboutItem);
+//        Intent intent = new Intent();
+//        intent.setAction(Intent.ACTION_SEND);
+//        intent.setType("image/*");
+//        intent.putExtra(Intent.EXTRA_STREAM, "....");
+//        setShareIntent(intent);
+//        return true;
+//    }
+//
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        } else if (id == R.id.action_about) {
+//            Intent intent = new Intent();
+//            intent.setAction(Intent.ACTION_SEND);
+//            intent.setType("image/*");
+//            intent.putExtra(Intent.EXTRA_STREAM, "....");
+//            setShareIntent(intent);
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
+
+    private void showSnackbar(View view) {
+
+        final Snackbar snackbar = Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG);
+        snackbar.setAction("ok", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                snackbar.dismiss();
+            }
+        });
+        snackbar.show();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    private void setShareIntent(Intent shareIntent){
+        if(shareActionProvider != null){
+            shareActionProvider.setShareIntent(shareIntent);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }

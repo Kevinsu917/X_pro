@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#E51C23</color>
+    <color name="colorPrimaryDark">#D01716</color>
+    <color name="colorAccent">#3F51B5</color>
+
+    <item name="drawer_bg_color_normal" type="color">#00FFFFFF</item>
+    <item name="drawer_bg_color_press" type="color">#FFEEEEEE</item>
+    <color name="common_system_style_red">#F25039</color>
+    <color name="common_system_style_gray">#000000</color>
 </resources>
