@@ -24,6 +24,7 @@
     <item android:title="setting">
         <menu>
             <item
+                android:id="@+id/itemSettings"
                 android:icon="@drawable/menu_setting"
                 android:title="设置" />
             <item

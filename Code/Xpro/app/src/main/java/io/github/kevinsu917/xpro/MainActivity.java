@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,11 +17,16 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
+import io.github.kevinsu917.xpro.setting.SettingsActivity_;
+
 @EActivity(R.layout.activity_main)
 public class MainActivity extends BaseActivity {
 
     FloatingActionButton btn;
     ShareActionProvider shareActionProvider;
+
+    @ViewById(R.id.navigationView)
+    NavigationView navigationView;
 
     @ViewById(R.id.tvName)
     TextView tvName;
@@ -44,16 +51,22 @@ public class MainActivity extends BaseActivity {
         setSupportActionBar(toolbar);
 
         final ActionBar actionBar = getSupportActionBar();
-
-//        actionBar.setDisplayShowHomeEnabled(true);
-//        actionBar.setDisplayShowTitleEnabled(true);
-//        actionBar.setDisplayHomeAsUpEnabled(true);
-//        actionBar.setHomeButtonEnabled(true);
-//        actionBar.setDisplayUseLogoEnabled(true);
-//        actionBar.setDefaultDisplayHomeAsUpEnabled(true);
-
-//        actionBar.setTitle("你好");
         actionBar.setShowHideAnimationEnabled(true);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                int itemId = menuItem.getItemId();
+                if(itemId == R.id.itemSettings){
+                    Intent intent = new Intent(MainActivity.this, SettingsActivity_.class);
+                    startActivity(intent);
+                    return true;
+                }
+
+                return false;
+            }
+        });
 
         btn = (FloatingActionButton) findViewById(R.id.fab);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -113,6 +126,8 @@ public class MainActivity extends BaseActivity {
 //
 //        return super.onOptionsItemSelected(item);
 //    }
+
+
 
     private void showSnackbar(View view) {
 
