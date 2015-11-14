@@ -22,6 +22,9 @@ import io.github.kevinsu917.xpro.setting.SettingsActivity_;
 @EActivity(R.layout.activity_main)
 public class MainActivity extends BaseActivity {
 
+
+    //  这是一次错误的提交
+
     FloatingActionButton btn;
     ShareActionProvider shareActionProvider;
 
