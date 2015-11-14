@@ -5,4 +5,12 @@
     <string name="title_activity_base">BaseActivity</string>
     <string name="title_activity_child">ChildActivity</string>
     <string name="action_search">search</string>
+
+    <string name="teach_fragment">Teach Fragment</string>
+    <string name="mine_fragment">Mine Fragment</string>
+    <string name="messages_fragment">Messages Fragment</string>
+    <string name="find_fragment">Find Fragment</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_feedback">FeedbackActivity</string>
+    <string name="common_quit_text">再按一次,退出X_pro</string>
 </resources>

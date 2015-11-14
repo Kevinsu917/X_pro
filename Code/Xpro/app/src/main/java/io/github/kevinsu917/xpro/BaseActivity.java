@@ -22,6 +22,8 @@ public class BaseActivity extends ActionBarActivity {
         swipeListener = new SwipeListener(this);
     }
 
+
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {

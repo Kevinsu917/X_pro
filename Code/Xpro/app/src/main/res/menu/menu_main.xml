@@ -28,6 +28,7 @@
                 android:icon="@drawable/menu_setting"
                 android:title="设置" />
             <item
+                android:id="@+id/itemFeedback"
                 android:icon="@drawable/menu_feedback"
                 android:title="意见反馈" />
         </menu>

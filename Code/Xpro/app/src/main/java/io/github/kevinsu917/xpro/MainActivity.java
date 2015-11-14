@@ -1,14 +1,17 @@
 package io.github.kevinsu917.xpro;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.ShareActionProvider;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -17,16 +20,22 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
+import io.github.kevinsu917.xpro.common.utils.Functions;
+import io.github.kevinsu917.xpro.find.FindFragment;
+import io.github.kevinsu917.xpro.messages.MessagesFragment;
+import io.github.kevinsu917.xpro.mine.MineFragment;
+import io.github.kevinsu917.xpro.setting.FeedbackActivity_;
 import io.github.kevinsu917.xpro.setting.SettingsActivity_;
+import io.github.kevinsu917.xpro.teach.TeachFragment;
 
 @EActivity(R.layout.activity_main)
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements TeachFragment.OnFragmentInteractionListener, MessagesFragment.OnFragmentInteractionListener, FindFragment.OnFragmentInteractionListener, MineFragment.OnFragmentInteractionListener {
 
+    private long exitTime = 0;
 
-    //  这是一次错误的提交
-
-    FloatingActionButton btn;
-    ShareActionProvider shareActionProvider;
+    @ViewById(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
+    ActionBarDrawerToggle drawerToggle;
 
     @ViewById(R.id.navigationView)
     NavigationView navigationView;
@@ -45,108 +54,116 @@ public class MainActivity extends BaseActivity {
     @AfterViews
     void initView() {
 
-        Typeface typeFaceName =Typeface.createFromAsset(getAssets(),"fonts/Roboto-Medium.ttf");
+        Typeface typeFaceName = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Medium.ttf");
         tvName.setTypeface(typeFaceName);
-        Typeface typeFaceMood =Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
+        Typeface typeFaceMood = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
         tvMood.setTypeface(typeFaceMood);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setShowHideAnimationEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
 
+                drawerLayout.closeDrawer(navigationView);
+
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
                 int itemId = menuItem.getItemId();
-                if(itemId == R.id.itemSettings){
+                if (itemId == R.id.itemTeach) {
+                    fragmentTransaction.replace(R.id.rlContentRoot, TeachFragment.newInstance("", ""));
+                    fragmentTransaction.commit();
+                    return true;
+                } else if (itemId == R.id.itemMessage) {
+                    fragmentTransaction.replace(R.id.rlContentRoot, MessagesFragment.newInstance("", ""));
+                    fragmentTransaction.commit();
+                    return true;
+                } else if (itemId == R.id.itemFind) {
+                    fragmentTransaction.replace(R.id.rlContentRoot, FindFragment.newInstance("", ""));
+                    fragmentTransaction.commit();
+                    return true;
+                } else if (itemId == R.id.itemMine) {
+                    fragmentTransaction.replace(R.id.rlContentRoot, MineFragment.newInstance("", ""));
+                    fragmentTransaction.commit();
+                    return true;
+                } else if (itemId == R.id.itemSettings) {
                     Intent intent = new Intent(MainActivity.this, SettingsActivity_.class);
                     startActivity(intent);
                     return true;
+                } else if (itemId == R.id.itemFeedback) {
+                    Intent intent = new Intent(MainActivity.this, FeedbackActivity_.class);
+                    startActivity(intent);
+                    return true;
                 }
-
                 return false;
             }
         });
 
-        btn = (FloatingActionButton) findViewById(R.id.fab);
-        btn.setOnClickListener(new View.OnClickListener() {
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.action_about, R.string.action_settings) {
             @Override
-            public void onClick(View view) {
-
-//                if (actionBar.isShowing()) {
-//                    actionBar.hide();
-//                    showSnackbar(view);
-//                } else {
-//                    showSnackbar(view);
-//                    actionBar.show();
-//                }
-
-//                HttpReqManager.getInstance(MainActivity.this).requet();
-
-                Intent intent = new Intent(MainActivity.this, ChildActivity_.class);
-                startActivity(intent);
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
             }
-        });
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+        };
+        drawerToggle.syncState();
+        drawerLayout.setDrawerListener(drawerToggle);
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//
-//        MenuItem aboutItem = menu.findItem(R.id.action_about);
-//        shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(aboutItem);
-//        Intent intent = new Intent();
-//        intent.setAction(Intent.ACTION_SEND);
-//        intent.setType("image/*");
-//        intent.putExtra(Intent.EXTRA_STREAM, "....");
-//        setShareIntent(intent);
-//        return true;
-//    }
-//
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        } else if (id == R.id.action_about) {
-//            Intent intent = new Intent();
-//            intent.setAction(Intent.ACTION_SEND);
-//            intent.setType("image/*");
-//            intent.putExtra(Intent.EXTRA_STREAM, "....");
-//            setShareIntent(intent);
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
-
-
-
-    private void showSnackbar(View view) {
-
-        final Snackbar snackbar = Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG);
-        snackbar.setAction("ok", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                snackbar.dismiss();
-            }
-        });
-        snackbar.show();
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        drawerToggle.syncState();
     }
 
-    private void setShareIntent(Intent shareIntent){
-        if(shareActionProvider != null){
-            shareActionProvider.setShareIntent(shareIntent);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_sub, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(navigationView)){
+            drawerLayout.closeDrawer(navigationView);
+        }else{
+            exitApp();
+        }
+    }
+
+    private void exitApp() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            Functions.toast(this, getString(R.string.common_quit_text));
+            exitTime = System.currentTimeMillis();
+        } else {
+//            Functions.LoginOutSession(this);
+            finish();
         }
     }
 }

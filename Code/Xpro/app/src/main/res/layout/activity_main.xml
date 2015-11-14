@@ -32,15 +32,8 @@
 
         <include layout="@layout/content_main" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@android:drawable/ic_dialog_email" />
-
     </android.support.design.widget.CoordinatorLayout>
+
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigationView"
@@ -50,8 +43,5 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/header_main"
         app:menu="@menu/menu_main" />
-
-    <!--app:itemIconTint="@color/common_system_style_red"-->
-    <!--app:itemTextColor="@color/common_system_style_red"-->
 
 </android.support.v4.widget.DrawerLayout>
