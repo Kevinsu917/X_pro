@@ -23,6 +23,8 @@ public class ChildActivity extends AppCompatActivity {
     @AfterViews
     public void initView(){
 
+
+        //测试
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
