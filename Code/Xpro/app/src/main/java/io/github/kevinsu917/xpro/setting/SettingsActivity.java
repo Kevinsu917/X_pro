@@ -15,3 +15,4 @@ public class SettingsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
     }
 }
+
